@@ -17,23 +17,19 @@ Parse the DATASET and return the following JSON object:
       "category": "SOLID | SARI-SARI",
       "vegetables": [
         {
-          "name": "[vegetable name]",
-          "price": [] // price range: [lowest, highest]
-        },
-        // or
-        {
-          "name": "[vegetable name]",
-          "categories": [
+          "name": "[vegetable name]", // Capitalize first letter of each word
+          "data": [
             {
-              "name": "[category name]",
+              "name": "[sub-category of the vegetable]", // Capitalize first letter of each word
               "price": [] // price range: [lowest, highest]
             }
           ]
-        }
+        },
       ]
     }
   ],
-  "date": "[date]"
+  "date": "[date]",
+  "parsedDate": "[parsed date]", // ISO 8601 format
 }
 </JSON>
  
@@ -49,6 +45,7 @@ Parse the DATASET and return the following JSON object:
       model: openai("gpt-4o"),
       prompt: sysPrompt.replace("[[data-set]]", item.content ?? ""),
       output: "no-schema",
+      temperature: 0.1,
     });
 
     console.log("[i] ...done");
