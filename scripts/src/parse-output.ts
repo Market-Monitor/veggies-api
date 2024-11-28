@@ -3,7 +3,13 @@ import RESULT_DATA from "../output/result-copy.json";
 
 async function main() {
   const parentIdList = new Map<string, string>();
-  const idList = new Map<string, string>();
+  const idList = new Map<
+    string,
+    {
+      id: string;
+      parentId: string;
+    }
+  >();
 
   for (const item of RESULT_DATA) {
     for (const data of item.data) {
@@ -25,7 +31,10 @@ async function main() {
             continue;
           }
 
-          idList.set(catName, id);
+          idList.set(catName, {
+            id,
+            parentId,
+          });
         }
       }
     }
@@ -39,12 +48,14 @@ async function main() {
 
           return {
             ...category,
-            id: idList.get(catName),
+            id: idList.get(catName)?.id,
+            parentId: idList.get(catName)?.parentId,
           };
         });
 
         return {
           ...x,
+          category: data.category,
           id: parentIdList.get(x.name),
         };
       });
@@ -52,7 +63,12 @@ async function main() {
       return data;
     });
 
-    return item;
+    const nitem = {
+      ...item,
+      data: item.data.flatMap((item) => item.vegetables),
+    };
+
+    return nitem;
   });
 
   await Bun.write(

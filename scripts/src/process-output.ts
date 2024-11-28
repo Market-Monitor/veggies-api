@@ -18,13 +18,24 @@ async function main() {
   }
 
   // Insert veggies classes
-  for (const [name, id] of Object.entries(VeggiesClasses)) {
-    await veggiesClasses.insertOne({ name, id });
+  for (const [name, ids] of Object.entries(VeggiesClasses)) {
+    await veggiesClasses.insertOne({ name, ...ids });
   }
 
   // Insert history prices
   for (const item of HistoryPrices) {
-    await historyPrices.insertOne(item);
+    for (const data of item.data) {
+      for (const x of data.data) {
+        await historyPrices.insertOne({
+          ...x,
+          date: item.date,
+          dateISO: item.parsedDate,
+          dateUnix: new Date(item.parsedDate).getTime(),
+          category: data.category,
+          parentName: data.name,
+        });
+      }
+    }
   }
 
   await mongoClient.close();
