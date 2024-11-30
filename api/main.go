@@ -22,7 +22,7 @@ func Start() {
 
 	app.Get("/", func(c fiber.Ctx) error {
 		return c.SendString(
-			"Hello, World!",
+			"Benguet Vegetables & Goods Price Monitoring API (Not Official)",
 		)
 	})
 
