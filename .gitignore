@@ -5,6 +5,3 @@ tmp
 .env
 .env.local
 .env.production
-
-# scripts output
-output
