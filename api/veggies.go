@@ -57,10 +57,11 @@ func GetVeggie(c fiber.Ctx) error {
 	}
 
 	return utils.ResSuccess(c, 200, fiber.Map{
-		"name":    veggie.Name,
-		"id":      veggie.ID,
-		"_id":     veggie.M_ID.Hex(),
-		"classes": veggieClasses,
+		"name":            veggie.Name,
+		"id":              veggie.ID,
+		"_id":             veggie.M_ID.Hex(),
+		"classes":         veggieClasses,
+		"tradingCenterId": veggie.TradingCenterId,
 	})
 	// End getting the veggie classes
 }
