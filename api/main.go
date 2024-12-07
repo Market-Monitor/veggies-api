@@ -31,6 +31,7 @@ func Start() {
 	api.Get("/prices", GetVeggiePrices)
 	api.Get("/veggies", GetVeggies)
 	api.Get("/veggies/:id", GetVeggie)
+	api.Get("/config", GetConfiguration)
 
 	log.Fatal(app.Listen(":7000"))
 }
