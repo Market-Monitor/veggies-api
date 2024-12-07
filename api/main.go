@@ -31,6 +31,7 @@ func Start() {
 	api.Get("/history-prices/latest", GetLatestHistoryPrices)
 	api.Get("/prices", GetVeggiePrices)
 	api.Get("/veggies", GetVeggies)
+	api.Get("/veggies/classes", GetAllVeggieClasses)
 	api.Get("/veggies/:id", GetVeggie)
 	api.Get("/config", GetConfiguration)
 

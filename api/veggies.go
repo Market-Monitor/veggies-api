@@ -65,3 +65,19 @@ func GetVeggie(c fiber.Ctx) error {
 	})
 	// End getting the veggie classes
 }
+
+func GetAllVeggieClasses(c fiber.Ctx) error {
+	veggieClassesColl := mongoClient.Database(DATABASE).Collection(COLL_VEGGIES_CLASSES)
+
+	cursor, err := veggieClassesColl.Find(context.TODO(), bson.D{})
+	if err != nil {
+		return utils.ResError(c, 500, err)
+	}
+
+	var veggieClasses []types.VeggieClass
+	if err := cursor.All(context.TODO(), &veggieClasses); err != nil {
+		return utils.ResError(c, 500, err)
+	}
+
+	return utils.ResSuccess(c, 200, veggieClasses)
+}
