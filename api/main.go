@@ -28,6 +28,7 @@ func Start() {
 
 	api := app.Group("/api")
 	api.Get("/history-prices", GetHistoryPrices)
+	api.Get("/history-prices/latest", GetLatestHistoryPrices)
 	api.Get("/prices", GetVeggiePrices)
 	api.Get("/veggies", GetVeggies)
 	api.Get("/veggies/:id", GetVeggie)
