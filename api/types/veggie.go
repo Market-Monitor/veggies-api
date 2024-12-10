@@ -9,6 +9,8 @@ type Veggie struct {
 	ID              string        `bson:"id" json:"id"`
 	Name            string        `bson:"name" json:"name"`
 	TradingCenterId string        `bson:"tradingCenterId" json:"tradingCenterId"`
+	ImageURL        string        `bson:"imageUrl" json:"imageUrl"`
+	ImageSource     string        `bson:"imageSource" json:"imageSource"`
 }
 
 type VeggieClass struct {

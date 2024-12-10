@@ -62,6 +62,8 @@ func GetVeggie(c fiber.Ctx) error {
 		"_id":             veggie.M_ID.Hex(),
 		"classes":         veggieClasses,
 		"tradingCenterId": veggie.TradingCenterId,
+		"imageUrl":        veggie.ImageURL,
+		"imageSource":     veggie.ImageSource,
 	})
 	// End getting the veggie classes
 }
