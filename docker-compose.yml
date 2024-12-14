@@ -1,0 +1,25 @@
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo-data:/data/db
+
+  web:
+    build: .
+    restart: always
+    ports:
+      - "7000:7000"
+    env_file:
+      - .env
+    develop:
+      watch:
+        - path: .
+          target: /api
+          action: rebuild
+
+volumes:
+  mongo-data:
