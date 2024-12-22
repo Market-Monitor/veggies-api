@@ -8,7 +8,7 @@ services:
     volumes:
       - mongo-data:/data/db
 
-  web:
+  service-api:
     build: .
     restart: always
     ports:
@@ -20,6 +20,8 @@ services:
         - path: .
           target: /api
           action: rebuild
+    depends_on:
+      - mongodb
 
 volumes:
   mongo-data:
