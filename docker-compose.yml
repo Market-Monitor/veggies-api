@@ -12,7 +12,7 @@ services:
     build: .
     restart: always
     ports:
-      - "7000:7000"
+      - "127.0.0.1:7000:7000"
     env_file:
       - .env
     develop:
