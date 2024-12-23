@@ -7,6 +7,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - mongo-data:/data/db
+    networks:
+      - mm-network
 
   service-api:
     build: .
