@@ -22,6 +22,8 @@ services:
           action: rebuild
     depends_on:
       - mongodb
+    networks:
+      - mm-network
 
 volumes:
   mongo-data:
