@@ -10,6 +10,8 @@ services:
       - mongo-data:/data/db
     networks:
       - mm-network
+    ports:
+      - "127.0.0.1:27017:27017"
 
   service-api:
     build: .
