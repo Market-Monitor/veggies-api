@@ -1,18 +1,4 @@
 services:
-  mongodb:
-    image: mongodb/mongodb-community-server:latest
-    restart: always
-    container_name: mongodb
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-    volumes:
-      - mongo-data:/data/db
-    networks:
-      - mm-network
-    ports:
-      - "127.0.0.1:27017:27017"
-
   service-api:
     build: .
     restart: always
@@ -26,13 +12,8 @@ services:
         - path: .
           target: /api
           action: rebuild
-    depends_on:
-      - mongodb
     networks:
       - mm-network
-
-volumes:
-  mongo-data:
 
 networks:
   mm-network:
