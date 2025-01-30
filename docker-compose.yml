@@ -14,6 +14,40 @@ services:
           action: rebuild
     networks:
       - mm-network
+  mongodb:
+    image: mongodb/mongodb-community-server:latest
+    restart: always
+    container_name: mongodb
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: ${MONGODB_INITDB_ROOT_USERNAME}
+      MONGODB_INITDB_ROOT_PASSWORD: ${MONGODB_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - mm-network
+    ports:
+      - "127.0.0.1:27017:27017"
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    networks:
+      - mm-network
+    ports:
+      - "127.0.0.1:5432:5432"
+
+volumes:
+  postgres-db:
+    external: true
+  mongodata:
+    external: true
 
 networks:
   mm-network:
