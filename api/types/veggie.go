@@ -36,6 +36,7 @@ type VeggiePrice struct {
 }
 
 type LatestHistoryPrice struct {
+	ImageSource     string                    `bson:"imageSource" json:"imageSource"`
 	ParentId        string                    `bson:"parentId" json:"parentId"`
 	ParentName      string                    `bson:"parentName" json:"parentName"`
 	Category        string                    `bson:"category" json:"category"`

@@ -42,7 +42,6 @@ func GetLatestHistoryPrices(c fiber.Ctx) error {
 
 	// START get latest history prices
 	coll := mongoClient.Database(DATABASE).Collection(COLL_HISTORY_PRICES)
-
 	cursor, err := coll.Find(context.TODO(), bson.M{
 		"dateISO": latestConfig.LatestDataDate,
 	})
@@ -54,7 +53,30 @@ func GetLatestHistoryPrices(c fiber.Ctx) error {
 	if err := cursor.All(context.TODO(), &historyPrices); err != nil {
 		return utils.ResError(c, 500, err)
 	}
-	// END get latest history prices
+	// END get latest history pricess
+
+	// START get all veggies (for images getting)
+	veggieColl := mongoClient.Database(DATABASE).Collection(COLL_VEGGIES)
+	veggieCollCursor, veggieCollErr := veggieColl.Find(context.TODO(), bson.D{})
+	if veggieCollErr != nil {
+		return utils.ResError(c, 500, err)
+	}
+
+	var veggies []types.Veggie
+	if err := veggieCollCursor.All(context.TODO(), &veggies); err != nil {
+		return utils.ResError(c, 500, err)
+	}
+	// END get all veggies
+
+	filterImageSource := func(veggieId string) string {
+		for _, veggie := range veggies {
+			if veggie.ID == veggieId {
+				return veggie.ImageURL
+			}
+		}
+
+		return ""
+	}
 
 	// START parse latest history
 	var data []types.LatestHistoryPrice
@@ -81,6 +103,7 @@ func GetLatestHistoryPrices(c fiber.Ctx) error {
 		}
 
 		data = append(data, types.LatestHistoryPrice{
+			ImageSource:     filterImageSource(historyPrice.ParentId),
 			ParentId:        historyPrice.ParentId,
 			ParentName:      historyPrice.ParentName,
 			Category:        historyPrice.Category,
