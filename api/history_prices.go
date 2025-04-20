@@ -5,13 +5,13 @@ import (
 
 	"github.com/Market-Monitor/veggies-api/api/types"
 	"github.com/Market-Monitor/veggies-api/api/utils"
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
 // GetHistoryPrices returns all history prices of all veggies
 // TODO: Sort to get only the prices on the day of the request
-func GetHistoryPrices(c fiber.Ctx) error {
+func GetHistoryPrices(c *fiber.Ctx) error {
 	coll := mongoClient.Database(DATABASE).Collection(COLL_HISTORY_PRICES)
 
 	cursor, err := coll.Find(context.TODO(), bson.D{})
@@ -27,7 +27,7 @@ func GetHistoryPrices(c fiber.Ctx) error {
 	return utils.ResSuccess(c, 200, historyPrices)
 }
 
-func GetLatestHistoryPrices(c fiber.Ctx) error {
+func GetLatestHistoryPrices(c *fiber.Ctx) error {
 	// START get config
 	configColl := mongoClient.Database(DATABASE).Collection(COLL_CONFIGURATIONS)
 

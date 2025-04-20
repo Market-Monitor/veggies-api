@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/Market-Monitor/veggies-api/api/database"
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
@@ -20,13 +20,14 @@ func Start() {
 
 	app := fiber.New()
 
-	app.Get("/", func(c fiber.Ctx) error {
+	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString(
 			"Benguet Vegetables & Goods Price Monitoring API (Not Official)",
 		)
 	})
 
 	api := app.Group("/api")
+
 	api.Get("/history-prices", GetHistoryPrices)
 	api.Get("/history-prices/latest", GetLatestHistoryPrices)
 	api.Get("/prices", GetVeggiePrices)

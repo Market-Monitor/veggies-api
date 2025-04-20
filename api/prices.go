@@ -4,14 +4,14 @@ import (
 	"context"
 
 	"github.com/Market-Monitor/veggies-api/api/utils"
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
 // GetVeggiePrices returns all history prices of a veggie by its ID and Class
 // ID: Veggie ID, the vegetable category
 // Class: Veggie Class, subcategory or class of the vegetable
-func GetVeggiePrices(c fiber.Ctx) error {
+func GetVeggiePrices(c *fiber.Ctx) error {
 	veggieId := c.Query("id")
 	veggieClass := c.Query("class")
 

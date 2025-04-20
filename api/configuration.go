@@ -5,11 +5,11 @@ import (
 
 	"github.com/Market-Monitor/veggies-api/api/types"
 	"github.com/Market-Monitor/veggies-api/api/utils"
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
-func GetConfiguration(c fiber.Ctx) error {
+func GetConfiguration(c *fiber.Ctx) error {
 	coll := mongoClient.Database(DATABASE).Collection(COLL_CONFIGURATIONS)
 
 	var config types.Configuration
