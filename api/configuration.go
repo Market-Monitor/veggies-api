@@ -10,7 +10,8 @@ import (
 )
 
 func GetConfiguration(c *fiber.Ctx) error {
-	coll := mongoClient.Database(DATABASE).Collection(COLL_CONFIGURATIONS)
+	db := GetTD_DB(c)
+	coll := db.Collection(COLL_CONFIGURATIONS)
 
 	var config types.Configuration
 

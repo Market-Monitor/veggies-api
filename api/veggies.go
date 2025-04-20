@@ -11,7 +11,8 @@ import (
 
 // GetVeggies returns all veggies
 func GetVeggies(c *fiber.Ctx) error {
-	coll := mongoClient.Database(DATABASE).Collection(COLL_VEGGIES)
+	db := GetTD_DB(c)
+	coll := db.Collection(COLL_VEGGIES)
 
 	cursor, err := coll.Find(context.TODO(), bson.D{})
 	if err != nil {
@@ -31,7 +32,8 @@ func GetVeggie(c *fiber.Ctx) error {
 	veggieId := c.Params("id")
 
 	// Begin getting the veggie
-	veggieColl := mongoClient.Database(DATABASE).Collection(COLL_VEGGIES)
+	db := GetTD_DB(c)
+	veggieColl := db.Collection(COLL_VEGGIES)
 
 	filter := bson.M{
 		"id": veggieId,
@@ -44,7 +46,7 @@ func GetVeggie(c *fiber.Ctx) error {
 	// End getting the veggie
 
 	// Begin getting the veggie classes
-	veggieClassesColl := mongoClient.Database(DATABASE).Collection(COLL_VEGGIES_CLASSES)
+	veggieClassesColl := db.Collection(COLL_VEGGIES_CLASSES)
 
 	cursor, err := veggieClassesColl.Find(context.TODO(), bson.M{"parentId": veggieId})
 	if err != nil {
@@ -69,7 +71,8 @@ func GetVeggie(c *fiber.Ctx) error {
 }
 
 func GetAllVeggieClasses(c *fiber.Ctx) error {
-	veggieClassesColl := mongoClient.Database(DATABASE).Collection(COLL_VEGGIES_CLASSES)
+	db := GetTD_DB(c)
+	veggieClassesColl := db.Collection(COLL_VEGGIES_CLASSES)
 
 	cursor, err := veggieClassesColl.Find(context.TODO(), bson.D{})
 	if err != nil {

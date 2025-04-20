@@ -15,7 +15,8 @@ func GetVeggiePrices(c *fiber.Ctx) error {
 	veggieId := c.Query("id")
 	veggieClass := c.Query("class")
 
-	coll := mongoClient.Database(DATABASE).Collection(COLL_HISTORY_PRICES)
+	db := GetTD_DB(c)
+	coll := db.Collection(COLL_HISTORY_PRICES)
 
 	filter := bson.M{
 		"parentId": veggieId,
