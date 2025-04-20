@@ -9,6 +9,16 @@ import (
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
+// GetConfiguration returns the configuration of the API
+// @Summary Get configuration
+// @Description Get the configuration of the API
+// @Tags config
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/config [get]
 func GetConfiguration(c *fiber.Ctx) error {
 	db := GetTD_DB(c)
 	coll := db.Collection(COLL_CONFIGURATIONS)

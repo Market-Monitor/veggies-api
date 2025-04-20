@@ -10,6 +10,15 @@ import (
 )
 
 // GetVeggies returns all veggies
+// @Summary Get all veggies
+// @Description Get all veggies
+// @Tags veggies
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/veggies [get]
 func GetVeggies(c *fiber.Ctx) error {
 	db := GetTD_DB(c)
 	coll := db.Collection(COLL_VEGGIES)
@@ -28,6 +37,16 @@ func GetVeggies(c *fiber.Ctx) error {
 }
 
 // GetVeggie returns a veggie with its classes by its ID
+// @Summary Get veggie by ID
+// @Description Get veggie by ID
+// @Tags veggies
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Param id path string true "Veggie ID"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/veggies/{id} [get]
 func GetVeggie(c *fiber.Ctx) error {
 	veggieId := c.Params("id")
 
@@ -70,6 +89,16 @@ func GetVeggie(c *fiber.Ctx) error {
 	// End getting the veggie classes
 }
 
+// GetAllVeggieClasses returns all veggie classes
+// @Summary Get all veggie classes
+// @Description Get all veggie classes
+// @Tags veggies
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/veggies_classes [get]
 func GetAllVeggieClasses(c *fiber.Ctx) error {
 	db := GetTD_DB(c)
 	veggieClassesColl := db.Collection(COLL_VEGGIES_CLASSES)

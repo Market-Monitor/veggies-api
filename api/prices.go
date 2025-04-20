@@ -9,8 +9,17 @@ import (
 )
 
 // GetVeggiePrices returns all history prices of a veggie by its ID and Class
-// ID: Veggie ID, the vegetable category
-// Class: Veggie Class, subcategory or class of the vegetable
+// @Summary Get veggie prices
+// @Description Get all history prices of a veggie by its ID and Class
+// @Tags history_prices
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Param id query string true "Veggie ID"
+// @Param class query string true "Veggie Class"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/veggie_prices [get]
 func GetVeggiePrices(c *fiber.Ctx) error {
 	veggieId := c.Query("id")
 	veggieClass := c.Query("class")

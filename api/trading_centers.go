@@ -31,7 +31,6 @@ func GetTradingCenters() ([]types.TradingCenter, error) {
 
 func GetTD_DB(c *fiber.Ctx) *mongo.Database {
 	tradingCenter := c.Locals("tradingCenter")
-	fmt.Println(tradingCenter)
 	databaseName := strings.ToUpper(fmt.Sprintf("MM_%s", tradingCenter))
 
 	return mongoClient.Database(databaseName)

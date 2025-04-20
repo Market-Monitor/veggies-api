@@ -6,7 +6,10 @@ import (
 
 	"github.com/Market-Monitor/veggies-api/api/database"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/swagger"
 	"go.mongodb.org/mongo-driver/v2/mongo"
+
+	_ "github.com/Market-Monitor/veggies-api/docs"
 )
 
 var mongoClient *mongo.Client = database.Connect()
@@ -25,6 +28,8 @@ func Start() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString(

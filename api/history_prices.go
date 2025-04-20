@@ -10,7 +10,15 @@ import (
 )
 
 // GetHistoryPrices returns all history prices of all veggies
-// TODO: Sort to get only the prices on the day of the request
+// @Summary Get history prices
+// @Description Get all history prices of all veggies
+// @Tags history_prices
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/history_prices [get]
 func GetHistoryPrices(c *fiber.Ctx) error {
 	db := GetTD_DB(c)
 	coll := db.Collection(COLL_HISTORY_PRICES)
@@ -28,6 +36,16 @@ func GetHistoryPrices(c *fiber.Ctx) error {
 	return utils.ResSuccess(c, 200, historyPrices)
 }
 
+// GetLatestHistoryPrices returns the latest history prices of all veggies
+// @Summary Get latest history prices
+// @Description Get the latest history prices of all veggies
+// @Tags history_prices
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/latest_history_prices [get]
 func GetLatestHistoryPrices(c *fiber.Ctx) error {
 	db := GetTD_DB(c)
 
