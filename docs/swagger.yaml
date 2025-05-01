@@ -40,7 +40,7 @@ paths:
       summary: Get configuration
       tags:
       - config
-  /api/{tradingCenter}/history_prices:
+  /api/{tradingCenter}/history-prices:
     get:
       consumes:
       - application/json
@@ -65,7 +65,7 @@ paths:
       summary: Get history prices
       tags:
       - history_prices
-  /api/{tradingCenter}/latest_history_prices:
+  /api/{tradingCenter}/history-prices/latest:
     get:
       consumes:
       - application/json
@@ -90,7 +90,7 @@ paths:
       summary: Get latest history prices
       tags:
       - history_prices
-  /api/{tradingCenter}/veggie_prices:
+  /api/{tradingCenter}/prices:
     get:
       consumes:
       - application/json
@@ -180,7 +180,7 @@ paths:
       summary: Get veggie by ID
       tags:
       - veggies
-  /api/{tradingCenter}/veggies_classes:
+  /api/{tradingCenter}/veggies/classes:
     get:
       consumes:
       - application/json

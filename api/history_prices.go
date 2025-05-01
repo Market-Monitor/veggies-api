@@ -18,7 +18,7 @@ import (
 // @Param tradingCenter path string true "Trading Center"
 // @Success 200 {object} utils.HTTPSuccessResponse
 // @Failure 500 {object} utils.HTTPErrorResponse
-// @Router /api/{tradingCenter}/history_prices [get]
+// @Router /api/{tradingCenter}/history-prices [get]
 func GetHistoryPrices(c *fiber.Ctx) error {
 	db := GetTD_DB(c)
 	coll := db.Collection(COLL_HISTORY_PRICES)
@@ -45,7 +45,7 @@ func GetHistoryPrices(c *fiber.Ctx) error {
 // @Param tradingCenter path string true "Trading Center"
 // @Success 200 {object} utils.HTTPSuccessResponse
 // @Failure 500 {object} utils.HTTPErrorResponse
-// @Router /api/{tradingCenter}/latest_history_prices [get]
+// @Router /api/{tradingCenter}/history-prices/latest [get]
 func GetLatestHistoryPrices(c *fiber.Ctx) error {
 	db := GetTD_DB(c)
 

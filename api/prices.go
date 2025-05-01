@@ -19,7 +19,7 @@ import (
 // @Param class query string true "Veggie Class"
 // @Success 200 {object} utils.HTTPSuccessResponse
 // @Failure 500 {object} utils.HTTPErrorResponse
-// @Router /api/{tradingCenter}/veggie_prices [get]
+// @Router /api/{tradingCenter}/prices [get]
 func GetVeggiePrices(c *fiber.Ctx) error {
 	veggieId := c.Query("id")
 	veggieClass := c.Query("class")

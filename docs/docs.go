@@ -53,7 +53,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/{tradingCenter}/history_prices": {
+        "/api/{tradingCenter}/history-prices": {
             "get": {
                 "description": "Get all history prices of all veggies",
                 "consumes": [
@@ -91,7 +91,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/{tradingCenter}/latest_history_prices": {
+        "/api/{tradingCenter}/history-prices/latest": {
             "get": {
                 "description": "Get the latest history prices of all veggies",
                 "consumes": [
@@ -129,7 +129,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/{tradingCenter}/veggie_prices": {
+        "/api/{tradingCenter}/prices": {
             "get": {
                 "description": "Get all history prices of a veggie by its ID and Class",
                 "consumes": [
@@ -219,6 +219,44 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/{tradingCenter}/veggies/classes": {
+            "get": {
+                "description": "Get all veggie classes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "veggies"
+                ],
+                "summary": "Get all veggie classes",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Trading Center",
+                        "name": "tradingCenter",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPSuccessResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/{tradingCenter}/veggies/{id}": {
             "get": {
                 "description": "Get veggie by ID",
@@ -244,44 +282,6 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Veggie ID",
                         "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/utils.HTTPSuccessResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/utils.HTTPErrorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/{tradingCenter}/veggies_classes": {
-            "get": {
-                "description": "Get all veggie classes",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "veggies"
-                ],
-                "summary": "Get all veggie classes",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Trading Center",
-                        "name": "tradingCenter",
                         "in": "path",
                         "required": true
                     }
