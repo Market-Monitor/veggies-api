@@ -5,12 +5,23 @@ import (
 
 	"github.com/Market-Monitor/veggies-api/api/types"
 	"github.com/Market-Monitor/veggies-api/api/utils"
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
-func GetConfiguration(c fiber.Ctx) error {
-	coll := mongoClient.Database(DATABASE).Collection(COLL_CONFIGURATIONS)
+// GetConfiguration returns the configuration of the API
+// @Summary Get configuration
+// @Description Get the configuration of the API
+// @Tags config
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/config [get]
+func GetConfiguration(c *fiber.Ctx) error {
+	db := GetTD_DB(c)
+	coll := db.Collection(COLL_CONFIGURATIONS)
 
 	var config types.Configuration
 

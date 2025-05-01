@@ -6,4 +6,5 @@ const (
 	COLL_VEGGIES         = "Veggies"
 	COLL_VEGGIES_CLASSES = "VeggiesClasses"
 	COLL_CONFIGURATIONS  = "Configurations"
+	COLL_TRADING_CENTERS = "TradingCenters"
 )

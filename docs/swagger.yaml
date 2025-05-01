@@ -1,0 +1,208 @@
+definitions:
+  utils.HTTPErrorResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  utils.HTTPSuccessResponse:
+    properties:
+      data: {}
+      success:
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /api/{tradingCenter}/config:
+    get:
+      consumes:
+      - application/json
+      description: Get the configuration of the API
+      parameters:
+      - description: Trading Center
+        in: path
+        name: tradingCenter
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HTTPErrorResponse'
+      summary: Get configuration
+      tags:
+      - config
+  /api/{tradingCenter}/history_prices:
+    get:
+      consumes:
+      - application/json
+      description: Get all history prices of all veggies
+      parameters:
+      - description: Trading Center
+        in: path
+        name: tradingCenter
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HTTPErrorResponse'
+      summary: Get history prices
+      tags:
+      - history_prices
+  /api/{tradingCenter}/latest_history_prices:
+    get:
+      consumes:
+      - application/json
+      description: Get the latest history prices of all veggies
+      parameters:
+      - description: Trading Center
+        in: path
+        name: tradingCenter
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HTTPErrorResponse'
+      summary: Get latest history prices
+      tags:
+      - history_prices
+  /api/{tradingCenter}/veggie_prices:
+    get:
+      consumes:
+      - application/json
+      description: Get all history prices of a veggie by its ID and Class
+      parameters:
+      - description: Trading Center
+        in: path
+        name: tradingCenter
+        required: true
+        type: string
+      - description: Veggie ID
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: Veggie Class
+        in: query
+        name: class
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HTTPErrorResponse'
+      summary: Get veggie prices
+      tags:
+      - history_prices
+  /api/{tradingCenter}/veggies:
+    get:
+      consumes:
+      - application/json
+      description: Get all veggies
+      parameters:
+      - description: Trading Center
+        in: path
+        name: tradingCenter
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HTTPErrorResponse'
+      summary: Get all veggies
+      tags:
+      - veggies
+  /api/{tradingCenter}/veggies/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get veggie by ID
+      parameters:
+      - description: Trading Center
+        in: path
+        name: tradingCenter
+        required: true
+        type: string
+      - description: Veggie ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HTTPErrorResponse'
+      summary: Get veggie by ID
+      tags:
+      - veggies
+  /api/{tradingCenter}/veggies_classes:
+    get:
+      consumes:
+      - application/json
+      description: Get all veggie classes
+      parameters:
+      - description: Trading Center
+        in: path
+        name: tradingCenter
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HTTPErrorResponse'
+      summary: Get all veggie classes
+      tags:
+      - veggies
+swagger: "2.0"

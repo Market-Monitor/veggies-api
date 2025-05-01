@@ -5,13 +5,23 @@ import (
 
 	"github.com/Market-Monitor/veggies-api/api/types"
 	"github.com/Market-Monitor/veggies-api/api/utils"
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
 // GetVeggies returns all veggies
-func GetVeggies(c fiber.Ctx) error {
-	coll := mongoClient.Database(DATABASE).Collection(COLL_VEGGIES)
+// @Summary Get all veggies
+// @Description Get all veggies
+// @Tags veggies
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/veggies [get]
+func GetVeggies(c *fiber.Ctx) error {
+	db := GetTD_DB(c)
+	coll := db.Collection(COLL_VEGGIES)
 
 	cursor, err := coll.Find(context.TODO(), bson.D{})
 	if err != nil {
@@ -27,11 +37,22 @@ func GetVeggies(c fiber.Ctx) error {
 }
 
 // GetVeggie returns a veggie with its classes by its ID
-func GetVeggie(c fiber.Ctx) error {
+// @Summary Get veggie by ID
+// @Description Get veggie by ID
+// @Tags veggies
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Param id path string true "Veggie ID"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/veggies/{id} [get]
+func GetVeggie(c *fiber.Ctx) error {
 	veggieId := c.Params("id")
 
 	// Begin getting the veggie
-	veggieColl := mongoClient.Database(DATABASE).Collection(COLL_VEGGIES)
+	db := GetTD_DB(c)
+	veggieColl := db.Collection(COLL_VEGGIES)
 
 	filter := bson.M{
 		"id": veggieId,
@@ -44,7 +65,7 @@ func GetVeggie(c fiber.Ctx) error {
 	// End getting the veggie
 
 	// Begin getting the veggie classes
-	veggieClassesColl := mongoClient.Database(DATABASE).Collection(COLL_VEGGIES_CLASSES)
+	veggieClassesColl := db.Collection(COLL_VEGGIES_CLASSES)
 
 	cursor, err := veggieClassesColl.Find(context.TODO(), bson.M{"parentId": veggieId})
 	if err != nil {
@@ -68,8 +89,19 @@ func GetVeggie(c fiber.Ctx) error {
 	// End getting the veggie classes
 }
 
-func GetAllVeggieClasses(c fiber.Ctx) error {
-	veggieClassesColl := mongoClient.Database(DATABASE).Collection(COLL_VEGGIES_CLASSES)
+// GetAllVeggieClasses returns all veggie classes
+// @Summary Get all veggie classes
+// @Description Get all veggie classes
+// @Tags veggies
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/veggies_classes [get]
+func GetAllVeggieClasses(c *fiber.Ctx) error {
+	db := GetTD_DB(c)
+	veggieClassesColl := db.Collection(COLL_VEGGIES_CLASSES)
 
 	cursor, err := veggieClassesColl.Find(context.TODO(), bson.D{})
 	if err != nil {

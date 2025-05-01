@@ -5,14 +5,23 @@ import (
 
 	"github.com/Market-Monitor/veggies-api/api/types"
 	"github.com/Market-Monitor/veggies-api/api/utils"
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
 // GetHistoryPrices returns all history prices of all veggies
-// TODO: Sort to get only the prices on the day of the request
-func GetHistoryPrices(c fiber.Ctx) error {
-	coll := mongoClient.Database(DATABASE).Collection(COLL_HISTORY_PRICES)
+// @Summary Get history prices
+// @Description Get all history prices of all veggies
+// @Tags history_prices
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/history_prices [get]
+func GetHistoryPrices(c *fiber.Ctx) error {
+	db := GetTD_DB(c)
+	coll := db.Collection(COLL_HISTORY_PRICES)
 
 	cursor, err := coll.Find(context.TODO(), bson.D{})
 	if err != nil {
@@ -27,9 +36,21 @@ func GetHistoryPrices(c fiber.Ctx) error {
 	return utils.ResSuccess(c, 200, historyPrices)
 }
 
-func GetLatestHistoryPrices(c fiber.Ctx) error {
+// GetLatestHistoryPrices returns the latest history prices of all veggies
+// @Summary Get latest history prices
+// @Description Get the latest history prices of all veggies
+// @Tags history_prices
+// @Accept json
+// @Produce json
+// @Param tradingCenter path string true "Trading Center"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/{tradingCenter}/latest_history_prices [get]
+func GetLatestHistoryPrices(c *fiber.Ctx) error {
+	db := GetTD_DB(c)
+
 	// START get config
-	configColl := mongoClient.Database(DATABASE).Collection(COLL_CONFIGURATIONS)
+	configColl := db.Collection(COLL_CONFIGURATIONS)
 
 	var latestConfig types.Configuration
 
@@ -41,7 +62,7 @@ func GetLatestHistoryPrices(c fiber.Ctx) error {
 	// END get config
 
 	// START get latest history prices
-	coll := mongoClient.Database(DATABASE).Collection(COLL_HISTORY_PRICES)
+	coll := db.Collection(COLL_HISTORY_PRICES)
 	cursor, err := coll.Find(context.TODO(), bson.M{
 		"dateISO": latestConfig.LatestDataDate,
 	})
@@ -56,7 +77,7 @@ func GetLatestHistoryPrices(c fiber.Ctx) error {
 	// END get latest history pricess
 
 	// START get all veggies (for images getting)
-	veggieColl := mongoClient.Database(DATABASE).Collection(COLL_VEGGIES)
+	veggieColl := db.Collection(COLL_VEGGIES)
 	veggieCollCursor, veggieCollErr := veggieColl.Find(context.TODO(), bson.D{})
 	if veggieCollErr != nil {
 		return utils.ResError(c, 500, err)
