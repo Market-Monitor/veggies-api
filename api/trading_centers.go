@@ -12,6 +12,15 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// GetTradingCenters returns all trading centers from the database
+// @Summary Get trading centers
+// @Description Get all trading centers
+// @Tags trading_centers
+// @Accept json
+// @Produce json
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/trading-centers [get]
 func GetTradingCenters() ([]types.TradingCenter, error) {
 	coll := mongoClient.Database(DATABASE).Collection(COLL_TRADING_CENTERS)
 

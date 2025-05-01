@@ -205,4 +205,23 @@ paths:
       summary: Get all veggie classes
       tags:
       - veggies
+  /api/trading-centers:
+    get:
+      consumes:
+      - application/json
+      description: Get all trading centers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HTTPErrorResponse'
+      summary: Get trading centers
+      tags:
+      - trading_centers
 swagger: "2.0"
