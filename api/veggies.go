@@ -98,7 +98,7 @@ func GetVeggie(c *fiber.Ctx) error {
 // @Param tradingCenter path string true "Trading Center"
 // @Success 200 {object} utils.HTTPSuccessResponse
 // @Failure 500 {object} utils.HTTPErrorResponse
-// @Router /api/{tradingCenter}/veggies_classes [get]
+// @Router /api/{tradingCenter}/veggies/classes [get]
 func GetAllVeggieClasses(c *fiber.Ctx) error {
 	db := GetTD_DB(c)
 	veggieClassesColl := db.Collection(COLL_VEGGIES_CLASSES)
