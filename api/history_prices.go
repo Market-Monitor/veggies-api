@@ -124,11 +124,11 @@ func GetLatestHistoryPrices(c *fiber.Ctx) error {
 		}
 
 		data = append(data, types.LatestHistoryPrice{
-			ImageSource:     filterImageSource(historyPrice.ParentId),
-			ParentId:        historyPrice.ParentId,
-			ParentName:      historyPrice.ParentName,
-			Category:        historyPrice.Category,
-			TradingCenterId: historyPrice.TradingCenterId,
+			ImageSource:   filterImageSource(historyPrice.ParentId),
+			ParentId:      historyPrice.ParentId,
+			ParentName:    historyPrice.ParentName,
+			Category:      historyPrice.Category,
+			TradingCenter: historyPrice.TradingCenter,
 			Classes: []types.LatestHistoryPriceClass{
 				{
 					ID:    historyPrice.ID,
