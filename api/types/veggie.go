@@ -11,6 +11,7 @@ type Veggie struct {
 	TradingCenter string        `bson:"tradingCenter" json:"tradingCenter"`
 	ImageURL      string        `bson:"imageUrl" json:"imageUrl"`
 	ImageSource   string        `bson:"imageSource" json:"imageSource"`
+	PriceUnit     string        `bson:"priceUnit" json:"priceUnit"`
 }
 
 type VeggieClass struct {

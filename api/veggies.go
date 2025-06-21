@@ -85,6 +85,7 @@ func GetVeggie(c *fiber.Ctx) error {
 		"tradingCenter": veggie.TradingCenter,
 		"imageUrl":      veggie.ImageURL,
 		"imageSource":   veggie.ImageSource,
+		"priceUnit":     veggie.PriceUnit,
 	})
 	// End getting the veggie classes
 }
