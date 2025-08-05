@@ -89,14 +89,14 @@ func GetLatestHistoryPrices(c *fiber.Ctx) error {
 	}
 	// END get all veggies
 
-	filterImageSource := func(veggieId string) string {
+	filterVeggie := func(veggieId string) *types.Veggie {
 		for _, veggie := range veggies {
 			if veggie.ID == veggieId {
-				return veggie.ImageURL
+				return &veggie
 			}
 		}
 
-		return ""
+		return nil
 	}
 
 	// START parse latest history
@@ -123,8 +123,20 @@ func GetLatestHistoryPrices(c *fiber.Ctx) error {
 			continue
 		}
 
+		veggie := filterVeggie(historyPrice.ParentId)
+		veggieImageUrl := ""
+		veggiePriceUnit := ""
+		if veggie == nil {
+			// default values if veggie not found
+			veggiePriceUnit = "kilo"
+		} else {
+			veggieImageUrl = veggie.ImageURL
+			veggiePriceUnit = veggie.PriceUnit
+		}
+
 		data = append(data, types.LatestHistoryPrice{
-			ImageSource:   filterImageSource(historyPrice.ParentId),
+			PriceUnit:     veggiePriceUnit,
+			ImageSource:   veggieImageUrl,
 			ParentId:      historyPrice.ParentId,
 			ParentName:    historyPrice.ParentName,
 			Category:      historyPrice.Category,

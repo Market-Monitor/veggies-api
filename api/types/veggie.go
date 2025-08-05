@@ -43,6 +43,7 @@ type LatestHistoryPrice struct {
 	Category      string                    `bson:"category" json:"category"`
 	TradingCenter string                    `bson:"tradingCenter" json:"tradingCenter"`
 	Classes       []LatestHistoryPriceClass `bson:"classes" json:"classes"`
+	PriceUnit     string                    `bson:"priceUnit" json:"priceUnit"`
 }
 
 type LatestHistoryPriceClass struct {
