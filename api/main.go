@@ -75,6 +75,7 @@ func Start() {
 	api.Get("/prices", GetVeggiePrices)
 	api.Get("/veggies", GetVeggies)
 	api.Get("/veggies/classes", GetAllVeggieClasses)
+	api.Get("/veggies/:id/:classId", GetVeggieByClassWithPrices)
 	api.Get("/veggies/:id", GetVeggie)
 	api.Get("/config", GetConfiguration)
 

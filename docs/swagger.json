@@ -348,6 +348,58 @@
                     }
                 }
             }
+        },
+        "/api/{tradingCenter}/veggies/{id}/{classId}": {
+            "get": {
+                "description": "Get veggie by class with prices",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "veggies"
+                ],
+                "summary": "Get veggie by class with prices",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Trading Center",
+                        "name": "tradingCenter",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Veggie ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Veggie Class ID",
+                        "name": "classId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPSuccessResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {

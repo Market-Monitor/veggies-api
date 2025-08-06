@@ -180,6 +180,41 @@ paths:
       summary: Get veggie by ID
       tags:
       - veggies
+  /api/{tradingCenter}/veggies/{id}/{classId}:
+    get:
+      consumes:
+      - application/json
+      description: Get veggie by class with prices
+      parameters:
+      - description: Trading Center
+        in: path
+        name: tradingCenter
+        required: true
+        type: string
+      - description: Veggie ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Veggie Class ID
+        in: path
+        name: classId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HTTPErrorResponse'
+      summary: Get veggie by class with prices
+      tags:
+      - veggies
   /api/{tradingCenter}/veggies/classes:
     get:
       consumes:
