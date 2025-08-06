@@ -22,6 +22,10 @@ import (
 // @Failure 500 {object} utils.HTTPErrorResponse
 // @Router /api/trading-centers [get]
 func GetTradingCenters() ([]types.TradingCenter, error) {
+	return getTradingCenters()
+}
+
+func getTradingCenters() ([]types.TradingCenter, error) {
 	coll := mongoClient.Database(DATABASE).Collection(COLL_TRADING_CENTERS)
 
 	cursor, err := coll.Find(context.TODO(), bson.D{})
@@ -40,7 +44,13 @@ func GetTradingCenters() ([]types.TradingCenter, error) {
 
 func GetTD_DB(c *fiber.Ctx) *mongo.Database {
 	tradingCenter := c.Locals("tradingCenter")
-	databaseName := strings.ToUpper(fmt.Sprintf("MM_%s", tradingCenter))
+
+	tcStr, _ := tradingCenter.(string)
+	return getDb(tcStr)
+}
+
+func getDb(dbName string) *mongo.Database {
+	databaseName := strings.ToUpper(fmt.Sprintf("MM_%s", dbName))
 
 	return mongoClient.Database(databaseName)
 }

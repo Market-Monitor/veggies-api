@@ -41,6 +41,8 @@ func Start() {
 		return c.JSON(tradingCenters)
 	})
 
+	app.Get("/api/veggies", GetAllVeggiesWithClasses)
+
 	api := app.Group("/api/:tradingCenter", func(c *fiber.Ctx) error {
 		tradingCenter := c.Params("tradingCenter")
 		for _, center := range tradingCenters {

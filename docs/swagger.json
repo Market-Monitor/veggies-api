@@ -33,6 +33,35 @@
                 }
             }
         },
+        "/api/veggies": {
+            "get": {
+                "description": "Get all veggies with their classes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "veggies"
+                ],
+                "summary": "Get all veggies with classes",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPSuccessResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/{tradingCenter}/config": {
             "get": {
                 "description": "Get the configuration of the API",

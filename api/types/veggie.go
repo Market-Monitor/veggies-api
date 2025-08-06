@@ -4,6 +4,17 @@ import (
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
+type AllVeggieWithClasses struct {
+	TradingCenters []TradingCenter `json:"tradingCenters"`
+	Veggies        []AllVeggies    `json:"veggies"`
+}
+
+type AllVeggies struct {
+	Data Veggie `json:"data"`
+
+	Classes []VeggieClass `json:"classes"`
+}
+
 type Veggie struct {
 	M_ID          bson.ObjectID `bson:"_id" json:"_id"`
 	ID            string        `bson:"id" json:"id"`
