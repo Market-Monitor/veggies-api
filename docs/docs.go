@@ -73,6 +73,46 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/veggies/ids": {
+            "post": {
+                "description": "Get the latest history prices of veggies by their IDs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "history_prices"
+                ],
+                "summary": "Get latest history prices by IDs, if the veggie is not found, it will be skipped",
+                "parameters": [
+                    {
+                        "description": "Filters for veggies",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/api.HistoryIdsBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPSuccessResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/{tradingCenter}/config": {
             "get": {
                 "description": "Get the configuration of the API",
@@ -414,6 +454,25 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "api.HistoryIdsBody": {
+            "type": "object",
+            "properties": {
+                "filters": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "tradingCenter": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "utils.HTTPErrorResponse": {
             "type": "object",
             "properties": {

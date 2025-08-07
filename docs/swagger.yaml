@@ -1,4 +1,16 @@
 definitions:
+  api.HistoryIdsBody:
+    properties:
+      filters:
+        items:
+          properties:
+            id:
+              type: string
+            tradingCenter:
+              type: string
+          type: object
+        type: array
+    type: object
   utils.HTTPErrorResponse:
     properties:
       error:
@@ -278,4 +290,31 @@ paths:
       summary: Get all veggies with classes
       tags:
       - veggies
+  /api/veggies/ids:
+    post:
+      consumes:
+      - application/json
+      description: Get the latest history prices of veggies by their IDs
+      parameters:
+      - description: Filters for veggies
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/api.HistoryIdsBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.HTTPSuccessResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.HTTPErrorResponse'
+      summary: Get latest history prices by IDs, if the veggie is not found, it will
+        be skipped
+      tags:
+      - history_prices
 swagger: "2.0"

@@ -15,6 +15,17 @@ type AllVeggies struct {
 	Classes []VeggieClass `json:"classes"`
 }
 
+type FilterVeggies struct {
+	ImageSource      string                    `bson:"imageSource" json:"imageSource"`
+	ParentId         string                    `bson:"parentId" json:"parentId"`
+	ParentName       string                    `bson:"parentName" json:"parentName"`
+	Category         string                    `bson:"category" json:"category"`
+	TradingCenter    string                    `bson:"tradingCenter" json:"tradingCenter"`
+	PriceUnit        string                    `bson:"priceUnit" json:"priceUnit"`
+	LatestUpdateDate int64                     `bson:"latestUpdateDate" json:"latestUpdateDate"`
+	Classes          []LatestHistoryPriceClass `bson:"classes" json:"classes"`
+}
+
 type Veggie struct {
 	M_ID          bson.ObjectID `bson:"_id" json:"_id"`
 	ID            string        `bson:"id" json:"id"`

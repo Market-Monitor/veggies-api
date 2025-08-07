@@ -42,6 +42,7 @@ func Start() {
 	})
 
 	app.Get("/api/veggies", GetAllVeggiesWithClasses)
+	app.Post("/api/veggies/ids", GetLatestHistoryPricesIds)
 
 	api := app.Group("/api/:tradingCenter", func(c *fiber.Ctx) error {
 		tradingCenter := c.Params("tradingCenter")

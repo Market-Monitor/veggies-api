@@ -2,11 +2,13 @@ package api
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/Market-Monitor/veggies-api/api/types"
 	"github.com/Market-Monitor/veggies-api/api/utils"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/v2/bson"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
 // GetHistoryPrices returns all history prices of all veggies
@@ -34,6 +36,87 @@ func GetHistoryPrices(c *fiber.Ctx) error {
 	}
 
 	return utils.ResSuccess(c, 200, historyPrices)
+}
+
+type HistoryIdsBody struct {
+	Filters []struct {
+		ID            string `json:"id"`
+		TradingCenter string `json:"tradingCenter"`
+	} `json:"filters" xml:"filters" form:"filters"`
+}
+
+// GetLatestHistoryPricesIds returns the latest history prices of veggies by their IDs
+// @Summary Get latest history prices by IDs, if the veggie is not found, it will be skipped
+// @Description Get the latest history prices of veggies by their IDs
+// @Tags history_prices
+// @Accept json
+// @Produce json
+// @Param body body HistoryIdsBody true "Filters for veggies"
+// @Success 200 {object} utils.HTTPSuccessResponse
+// @Failure 500 {object} utils.HTTPErrorResponse
+// @Router /api/veggies/ids [post]
+func GetLatestHistoryPricesIds(c *fiber.Ctx) error {
+	body := new(HistoryIdsBody)
+	if err := c.BodyParser(body); err != nil {
+		return utils.ResError(c, 400, fmt.Errorf("invalid request body: %v", err))
+	}
+
+	// Get all veggie latest prices & data
+	var veggies []types.FilterVeggies
+
+	for _, v := range body.Filters {
+		db := getDb(v.TradingCenter)
+		veggieColl := db.Collection(COLL_VEGGIES)
+		historyColl := db.Collection(COLL_HISTORY_PRICES)
+
+		var veggie types.Veggie
+		if err := veggieColl.FindOne(context.TODO(), bson.M{"id": v.ID}).Decode(&veggie); err != nil {
+			// skip
+			fmt.Println("Veggie not found:", v.ID, "in trading center:", v.TradingCenter)
+
+			continue
+		}
+
+		// Get first possible latest history price
+		var historyPrice types.VeggiePrice
+
+		hpOpts := options.FindOne().SetSort(bson.D{{Key: "dateUnix", Value: -1}})
+		if err := historyColl.FindOne(context.TODO(), bson.M{
+			"parentId":      veggie.ID,
+			"tradingCenter": v.TradingCenter,
+		}, hpOpts).Decode(&historyPrice); err != nil {
+			return utils.ResError(c, 500, err)
+		}
+
+		// Get latest history price for this veggie
+		var latestClassPrices []types.LatestHistoryPriceClass
+
+		cursor, err := historyColl.Find(context.TODO(), bson.M{
+			"parentId":      veggie.ID,
+			"tradingCenter": v.TradingCenter,
+			"dateUnix":      historyPrice.DateUnix,
+		})
+		if err != nil {
+			return utils.ResError(c, 500, err)
+		}
+
+		if err = cursor.All(context.TODO(), &latestClassPrices); err != nil {
+			return utils.ResError(c, 500, err)
+		}
+
+		veggies = append(veggies, types.FilterVeggies{
+			ImageSource:      veggie.ImageSource,
+			ParentId:         veggie.ID,
+			ParentName:       veggie.Name,
+			Category:         veggie.TradingCenter,
+			TradingCenter:    veggie.TradingCenter,
+			PriceUnit:        veggie.PriceUnit,
+			LatestUpdateDate: historyPrice.DateUnix,
+			Classes:          latestClassPrices,
+		})
+	}
+
+	return utils.ResSuccess(c, 200, veggies)
 }
 
 // GetLatestHistoryPrices returns the latest history prices of all veggies
