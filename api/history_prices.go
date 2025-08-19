@@ -105,7 +105,7 @@ func GetLatestHistoryPricesIds(c *fiber.Ctx) error {
 		}
 
 		veggies = append(veggies, types.FilterVeggies{
-			ImageSource:      veggie.ImageSource,
+			ImageSource:      veggie.ImageURL,
 			ParentId:         veggie.ID,
 			ParentName:       veggie.Name,
 			Category:         veggie.TradingCenter,
