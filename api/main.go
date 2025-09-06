@@ -52,6 +52,7 @@ func Start() {
 				c.Locals("tradingCenterId", center.M_ID)
 				c.Locals("tradingCenterName", center.Name)
 				c.Locals("tradingCenterLongName", center.LongName)
+				c.Locals("tradingCenterFacebookPage", center.FacebookPage)
 
 				return c.Next()
 			}
@@ -68,6 +69,7 @@ func Start() {
 			"tradingCenter": tradingCenter,
 			"name":          tradingCenterName,
 			"longName":      c.Locals("tradingCenterLongName"),
+			"facebookPage":  c.Locals("tradingCenterFacebookPage"),
 		})
 	})
 
